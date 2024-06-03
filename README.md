@@ -9,5 +9,7 @@ Last but no least, the third pillar, IPiattaforma Interface, concerns the platfo
 
 Distinctively, each one of the pillars interacts with the other functionalities thus contributing to the set up of an ecosystem, wherein Professionals can sign up to the several programs, and thus collaborating and spurring messages that, once too often, fall on deaf ears.
 
+You can access and try out the several functionalities at the CodePen link, found below.
+
 A Pen created on CodePen.io. Original URL: [https://codepen.io/saranderlini/pen/vYwmKEv](https://codepen.io/saranderlini/pen/vYwmKEv).
 
