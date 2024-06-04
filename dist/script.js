@@ -22,7 +22,7 @@ class ProgrammaFormazione {
         this.durata = durata;
         this.partecipanti = partecipanti || [];
     }
-    //Prende l'elenco Professioniste (popolato dal metodo partecipaProgramma() all'interno della definizione della classe Professionista) e per ciascun professionista controlla i corsi specificati nella proprieta' corsoIscrizione.
+    //Prende l'elenco Professioniste (popolato dal metodo partecipaProgramma() all'interno della definizione della classe Professionista) e per ciascun professionista controlla i corsi specificati nella proprieta' corsoIscrizione
     //
     aggiungiPartecipanti(professionisti) {
         professionisti.forEach((professionista) => {
@@ -93,32 +93,40 @@ class Professionista extends ProfessionistaMedia {
                 if (this.corsoIscrizione[i] == elencoProgrammi[j].titolo) {
                     Professioniste.push(this);
                     Corsi.push(elencoProgrammi[j]);
-                    // console.log(`${this.nome} ${this.cognome} iscritta al corso ${this.corsoIscrizione[i]}`);
                 }
             }
         }
     }
+    mostraDettagli() {
+        console.log(`Dettagli:\nNome: ${this.nome} ${this.cognome}\nSpecializzazione: ${this.ambitoSpecializzazione}\nEsperienza: ${this.esperienza} \nInteressi: ${this.interessi} \nProgrammi: ${this.corsoIscrizione}`);
+    }
 }
-let vociMagazine = new Piattaforma("Voci Magazine", "cartaceo", "La rivista mensile per leggere le storie nascoste.", "Leadership");
-let vociPodcast = new Piattaforma("Voci Podcast", "digitale", "Per ascoltare le voci e non solo sentire le voci fin troppo silenti.", "Social, Equity and Inclusion");
+let vociMagazine = new Piattaforma("Voci Magazine", "cartaceo", "La rivista mensile per leggere le storie nascoste.", "Articoli e inchieste");
+let vociPodcast = new Piattaforma("Voci Podcast", "digitale", "Per ascoltare le voci e non solo sentire le voci fin troppo silenti.", "Podcast");
 let programma1 = new Programma("Welfare e Pensioni", "Programma sull'aceeso a politiche attive, misure di supporto all'occupazione, per le nuove e vecchie generazioni", "Politica", 4);
 let programma2 = new Programma("Distribuzione del Bene", "Politiche monetarie, evasione e paradisi fiscali", "Economia", 10);
 let programma3 = new Programma("Sostenibilita", "Per affrontare sfide ed opportunità in ambito di sostenibilità ambientale, sociale ed economica, collegate alla rivoluzione ESG in atto.", "ESG", 10);
 let programma4 = new Programma("ReFrame", "per la promozione dell’equità di genere nell’industria cinematografica.", "Women in Film", 15);
 let programma5 = new Programma("The Radical Notion", "", "Politica e Societa'", 8);
+let programmaFoto = new Programma("Changing the room and the light within", "How the Female Gaze Is Changing Photographs of Women", "Fotografia", 20);
 checkIfProgramExists(programma1);
 checkIfProgramExists(programma2);
 checkIfProgramExists(programma3);
 checkIfProgramExists(programma4);
+checkIfProgramExists(programmaFoto);
 mostraProgrammi();
-let avvocato = new Professionista("Giulia", "Russo", "Politiche Sociali", "CdA", "Avversione alla Politica Liberale", ["Distribuzione del Bene"]);
-let rappresentanteSindacale = new Professionista("Anna", "Zanardi", "Diritti del Lavoro", "Sindacalista", "Lettura", ["Welfare e Pensioni", "Distribuzione del Bene"]);
-let giornalista = new Professionista("Federica", "Bianchi", "Diritti Umani", "Reuters", "Ecosistemi", ["ReFrame"]);
-let cronista = new Professionista("Andrea", "Fabbri", "Sport, Genere e Inclusione", "SkySport", "Cronista Sportiva", ["ReFrame"]);
+let avvocato = new Professionista("Giulia", "Russo", "Giornalismo", "CdA", "Avversione alla Politica Liberale", ["Distribuzione del Bene"]);
+let rappresentanteSindacale = new Professionista("Anna", "Zanardi", "Sindacalista", "Diritti del Lavoro", "Lettura", ["Welfare e Pensioni", "Distribuzione del Bene"]);
+let giornalista = new Professionista("Federica", "Bianchi", "Giornalista", "Reuters", "Ecosistemi", ["ReFrame"]);
+let cronista = new Professionista("Andrea", "Fabbri", "Cronista Sportiva", "SkySport", "Sport, Genere e Inclusione", ["ReFrame"]);
+let fotografa = new Professionista("Olimpia", "Vecchi", "Reporter", "Life", "Social Impact", ["Changing the room and the light within"]);
+fotografa.partecipaProgramma();
+fotografa.mostraDettagli();
 avvocato.partecipaProgramma();
 rappresentanteSindacale.partecipaProgramma();
 giornalista.partecipaProgramma();
 cronista.partecipaProgramma();
+cronista.mostraDettagli();
 //Riporta la lista dei partecipanti iscritti a ogni corso
 function mostraPartecipanti(list) {
     list.forEach((corso) => {
@@ -133,6 +141,9 @@ function mostraPartecipanti(list) {
     });
 }
 mostraPartecipanti(Corsi);
+let contenutoCronista = "The Second Sports Sex";
 vociMagazine.pubblicaContenuto(rappresentanteSindacale, "Come la rappresentazione continua ad essere una questione androcentrica.");
 vociPodcast.pubblicaContenuto(giornalista, "Il dilemma della gestazione per altri nel pieno dei conflitti.");
-vociPodcast.pubblicaContenuto(cronista, "The Second Sports Sex");
+vociPodcast.pubblicaContenuto(cronista, contenutoCronista);
+let theCollector = new Piattaforma("The Collector", "digitale", "online resource center for women photographers worldwide", "foto e video");
+theCollector.pubblicaContenuto(fotografa, "Corpi negati - Gallery");
