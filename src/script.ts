@@ -21,7 +21,7 @@ interface IProgrammaFormazione {
   titolo: string;
   descrizione: string;
   ambitoSpecializzazione: string;
-  durata: number;
+  durata: number; //ore
   partecipanti?: ProfessionistaMedia[];
 
   aggiungiPartecipanti(professionista: IProfessionistaMedia[]): void;
@@ -85,7 +85,7 @@ abstract class ProgrammaFormazione implements IProgrammaFormazione {
     this.partecipanti = partecipanti || [];
   }
 
-  //Prende l'elenco Professioniste (popolato dal metodo partecipaProgramma() all'interno della definizione della classe Professionista) e per ciascun professionista controlla i corsi specificati nella proprieta' corsoIscrizione.
+  //Prende l'elenco Professioniste (popolato dal metodo partecipaProgramma() all'interno della definizione della classe Professionista) e per ciascun professionista controlla i corsi specificati nella proprieta' corsoIscrizione
   //
   aggiungiPartecipanti(professionisti: ProfessionistaMedia[]): void {
     professionisti.forEach((professionista) => {
@@ -195,10 +195,15 @@ class Professionista extends ProfessionistaMedia {
         if (this.corsoIscrizione[i] == elencoProgrammi[j].titolo) {
           Professioniste.push(this);
           Corsi.push(elencoProgrammi[j]);
-          // console.log(`${this.nome} ${this.cognome} iscritta al corso ${this.corsoIscrizione[i]}`);
         }
       }
     }
+  }
+
+  mostraDettagli(this): void {
+    console.log(
+      `Dettagli:\nNome: ${this.nome} ${this.cognome}\nSpecializzazione: ${this.ambitoSpecializzazione}\nEsperienza: ${this.esperienza} \nInteressi: ${this.interessi} \nProgrammi: ${this.corsoIscrizione}`
+    );
   }
 }
 
@@ -206,13 +211,13 @@ let vociMagazine = new Piattaforma(
   "Voci Magazine",
   "cartaceo",
   "La rivista mensile per leggere le storie nascoste.",
-  "Leadership"
+  "Articoli e inchieste"
 );
 let vociPodcast = new Piattaforma(
   "Voci Podcast",
   "digitale",
   "Per ascoltare le voci e non solo sentire le voci fin troppo silenti.",
-  "Social, Equity and Inclusion"
+  "Podcast"
 );
 
 let programma1 = new Programma(
@@ -250,17 +255,25 @@ let programma5 = new Programma(
   8
 );
 
+let programmaFoto = new Programma(
+  "Changing the room and the light within",
+  "How the Female Gaze Is Changing Photographs of Women",
+  "Fotografia",
+  20
+);
+
 checkIfProgramExists(programma1);
 checkIfProgramExists(programma2);
 checkIfProgramExists(programma3);
 checkIfProgramExists(programma4);
+checkIfProgramExists(programmaFoto);
 
 mostraProgrammi();
 
 let avvocato = new Professionista(
   "Giulia",
   "Russo",
-  "Politiche Sociali",
+  "Giornalismo",
   "CdA",
   "Avversione alla Politica Liberale",
   ["Distribuzione del Bene"]
@@ -269,8 +282,8 @@ let avvocato = new Professionista(
 let rappresentanteSindacale = new Professionista(
   "Anna",
   "Zanardi",
-  "Diritti del Lavoro",
   "Sindacalista",
+  "Diritti del Lavoro",
   "Lettura",
   ["Welfare e Pensioni", "Distribuzione del Bene"]
 );
@@ -278,7 +291,7 @@ let rappresentanteSindacale = new Professionista(
 let giornalista = new Professionista(
   "Federica",
   "Bianchi",
-  "Diritti Umani",
+  "Giornalista",
   "Reuters",
   "Ecosistemi",
   ["ReFrame"]
@@ -287,16 +300,28 @@ let giornalista = new Professionista(
 let cronista = new Professionista(
   "Andrea",
   "Fabbri",
-  "Sport, Genere e Inclusione",
-  "SkySport",
   "Cronista Sportiva",
+  "SkySport",
+  "Sport, Genere e Inclusione",
   ["ReFrame"]
 );
 
+let fotografa = new Professionista(
+  "Olimpia",
+  "Vecchi",
+  "Reporter",
+  "Life",
+  "Social Impact",
+  ["Changing the room and the light within"]
+);
+
+fotografa.partecipaProgramma();
+fotografa.mostraDettagli();
 avvocato.partecipaProgramma();
 rappresentanteSindacale.partecipaProgramma();
 giornalista.partecipaProgramma();
 cronista.partecipaProgramma();
+cronista.mostraDettagli();
 
 //Riporta la lista dei partecipanti iscritti a ogni corso
 function mostraPartecipanti(list: IProgrammaFormazione[]): void {
@@ -315,6 +340,7 @@ function mostraPartecipanti(list: IProgrammaFormazione[]): void {
 }
 
 mostraPartecipanti(Corsi);
+let contenutoCronista: string = "The Second Sports Sex";
 
 vociMagazine.pubblicaContenuto(
   rappresentanteSindacale,
@@ -324,4 +350,11 @@ vociPodcast.pubblicaContenuto(
   giornalista,
   "Il dilemma della gestazione per altri nel pieno dei conflitti."
 );
-vociPodcast.pubblicaContenuto(cronista, "The Second Sports Sex");
+vociPodcast.pubblicaContenuto(cronista, contenutoCronista);
+let theCollector = new Piattaforma(
+  "The Collector",
+  "digitale",
+  "online resource center for women photographers worldwide",
+  "foto e video"
+);
+theCollector.pubblicaContenuto(fotografa, "Corpi negati - Gallery");
